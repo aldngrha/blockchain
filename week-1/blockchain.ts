@@ -65,7 +65,16 @@ class Blockchain {
   }
 
   getLatestBlock(): Block {
-    return this.chain[this.chain.length - 1];
+    // Ambil blok terakhir
+    const lastBlock = this.chain[this.chain.length - 1];
+
+    // Jika karena suatu alasan (yang mustahil) dia undefined,
+    // kita lempar error atau kembalikan blok pertama.
+    if (!lastBlock) {
+      throw new Error("Blockchain is empty!");
+    }
+
+    return lastBlock;
   }
 
   // [CORE] Menambah blok sekarang butuh proses "Mining"
