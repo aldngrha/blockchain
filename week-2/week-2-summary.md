@@ -1,6 +1,6 @@
 # Week 2 — Ethereum Fundamental & Digital Signatures
 **Tanggal:** 6–12 April 2026  
-**Status:** In Progress 🚧
+**Status:** Done
 
 ---
 
@@ -71,6 +71,121 @@ Dasar-dasar penulisan Smart Contract menggunakan bahasa Solidity.
     | `view` | Ya | Tidak | Tidak | Gratis (Off-chain) |
     | `payable`| Ya | Ya | **Ya** | Bayar Gas |
     | (default)| Ya | Ya | Tidak | Bayar Gas |
+
+### 7. CryptoZombies Lesson 1: Making the Zombie Factory
+Membangun pabrik zombie untuk memahami struktur data kompleks dan interaksi dasar.
+
+*   **Structs & Arrays:**
+    *   **Struct:** Digunakan untuk membuat tipe data kustom (misal: `Zombie` punya `name` dan `dna`).
+    *   **Dynamic Array:** `Zombie[] public zombies;` untuk menyimpan data yang jumlahnya bisa terus bertambah.
+*   **Keccak256 & Typecasting:**
+    *   Menggunakan `keccak256(abi.encodePacked(_str))` untuk menghasilkan angka acak (pseudo-random) dari sebuah string (misal untuk menentukan DNA zombie).
+    *   **Typecasting:** Mengonversi antar tipe data (misal: `uint8(a + b)`) jika diperlukan untuk kecocokan tipe.
+*   **Private Functions & Events:**
+    *   **Private:** Fungsi yang hanya bisa dipanggil di dalam kontrak (konvensi nama: `_functionName`).
+    *   **Events:** Cara kontrak berkomunikasi ke aplikasi luar (frontend). Contoh: `emit NewZombie(id, name, dna);` agar aplikasi tahu ada zombie baru yang dibuat.
+
+**Contoh Kode (ZombieFactory.sol):**
+```solidity
+pragma solidity >=0.5.0 <0.6.0;
+
+contract ZombieFactory {
+    event NewZombie(uint zombieId, string name, uint dna);
+
+    uint dnaDigits = 16;
+    uint dnaModulus = 10 ** dnaDigits;
+
+    struct Zombie {
+        string name;
+        uint dna;
+    }
+
+    Zombie[] public zombies;
+
+    function _createZombie(string memory _name, uint _dna) private {
+        uint id = zombies.push(Zombie(_name, _dna)) - 1;
+        emit NewZombie(id, _name, _dna);
+    }
+
+    function _generateRandomDna(string memory _str) private view returns (uint) {
+        uint rand = uint(keccak256(abi.encodePacked(_str)));
+        return rand % dnaModulus;
+    }
+
+    function createRandomZombie(string memory _name) public {
+        uint randDna = _generateRandomDna(_name);
+        _createZombie(_name, randDna);
+    }
+}
+```
+
+### 8. CryptoZombies Lesson 2: Zombies Attack Their Victims
+Mempelajari interaksi antar kontrak, manajemen memori, dan kontrol akses tingkat lanjut.
+
+*   **Mappings & Addresses (`msg.sender`):**
+    *   **Mapping:** *Key-value store* untuk menyimpan hubungan data (misal: ID Zombie ke Alamat Pemilik).
+    *   **`msg.sender`:** Variabel global yang berisi alamat pengirim transaksi saat ini.
+*   **Require (Error Handling):** Digunakan untuk validasi kondisi (misal: memastikan hanya pemilik yang bisa memberi makan zombienya). Jika gagal, transaksi dibatalkan (*revert*).
+*   **Inheritance (`is`) & Imports:** Membagi kode ke dalam beberapa file dan menggunakan pewarisan untuk menjaga modularitas (`contract B is A`).
+*   **Storage vs Memory:**
+    *   **Storage:** Data permanen di blockchain (seperti HDD).
+    *   **Memory:** Data sementara selama eksekusi fungsi (seperti RAM).
+*   **Internal & External Visibility:**
+    *   **Internal:** Hanya bisa diakses di dalam kontrak dan kontrak turunannya.
+    *   **External:** Hanya bisa dipanggil dari luar kontrak (seringkali lebih hemat gas).
+*   **Interacting with Other Contracts (Interfaces):** Cara berkomunikasi dengan kontrak lain (misal: CryptoKitties) tanpa perlu memiliki seluruh kodenya, cukup definisikan *function header*-nya saja.
+*   **Multiple Return Values:** Fungsi di Solidity bisa mengembalikan banyak nilai sekaligus, ditangkap menggunakan *tuple*.
+
+**Contoh Kode (ZombieFeeding.sol):**
+```solidity
+pragma solidity >=0.5.0 <0.6.0;
+
+import "./zombiefactory.sol";
+
+// Interface untuk berinteraksi dengan kontrak luar
+contract KittyInterface {
+  function getKitty(uint256 _id) external view returns (
+    bool isGestating, bool isReady, uint256 cooldownIndex, uint256 nextActionAt,
+    uint256 siringWithId, uint256 birthTime, uint256 matronId, uint256 sireId,
+    uint256 generation, uint256 genes
+  );
+}
+
+// Inheritance dari ZombieFactory
+contract ZombieFeeding is ZombieFactory {
+
+  KittyInterface kittyContract;
+
+  function setKittyContractAddress(address _address) external {
+    kittyContract = KittyInterface(_address);
+  }
+
+  // Internal: bisa diakses oleh kontrak turunan nantinya
+  function _feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) internal {
+    require(msg.sender == zombieToOwner[_zombieId]);
+    
+    // Menggunakan pointer 'storage' untuk memodifikasi state variable
+    Zombie storage myZombie = zombies[_zombieId];
+    
+    _targetDna = _targetDna % dnaModulus;
+    uint newDna = (myZombie.dna + _targetDna) / 2;
+    
+    // Fitur DNA spesial jika memakan kucing
+    if (keccak256(abi.encodePacked(_species)) == keccak256(abi.encodePacked("kitty"))) {
+      newDna = newDna - newDna % 100 + 99;
+    }
+    
+    _createZombie("NoName", newDna);
+  }
+
+  function feedOnKitty(uint _zombieId, uint _kittyId) public {
+    uint kittyDna;
+    // Mengambil nilai return ke-10 (genes) menggunakan tuple
+    (,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId);
+    _feedAndMultiply(_zombieId, kittyDna, "kitty");
+  }
+}
+```
 
 ---
 
