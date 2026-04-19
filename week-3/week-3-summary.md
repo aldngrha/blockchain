@@ -305,3 +305,204 @@ cryptoZombies.events.NewZombie({ filter: { _to: userAccount } })
 - [x] Menyelesaikan CryptoZombies Lesson 6 ✓
 - [x] Bisa membedakan penggunaan `.call()` dan `.send()` di Frontend.
 - [x] Paham cara mendengarkan *Events* dari Web3.js.
+
+---
+
+## 🏗️ Weekend Build: Advanced Storage System
+Ini adalah proyek konsolidasi yang menggabungkan semua materi *Advanced Solidity* minggu ini ke dalam satu kontrak yang solid dan siap produksi.
+
+### Fitur Utama Kontrak:
+1.  **Complex Data Structure:** Menggunakan `Struct` di dalam `Mapping` untuk menyimpan data entri.
+2.  **Double Mapping:** Melacak entri berdasarkan ID (`uint256 => Entry`) dan berdasarkan kepemilikan user (`address => uint256[]`).
+3.  **Modern Error Handling:** Menggunakan `Custom Errors` untuk penghematan gas yang signifikan.
+4.  **Advanced Access Control:** Menggunakan `Modifiers` untuk pengecekan kepemilikan (`onlyOwner`), pengecekan status kontrak (`whenNotPaused`), dan validasi keberadaan data (`entryExists`).
+5.  **State Management:** Fitur untuk menambah, mengambil, dan menghapus (`delete`) data, serta fitur darurat untuk menghentikan fungsi kontrak (`pause`/`unpause`).
+
+### Contoh Kode (AdvancedStorage.sol):
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
+
+contract AdvancedStorage {
+    // ── State Variables ────────────────────────────────
+    address public owner;
+    bool public paused;
+    uint256 public entryCount;
+
+    struct Entry {
+        uint256 id;
+        string data;
+        address creator;
+        uint256 timestamp;
+    }
+
+    mapping(uint256 => Entry) public entries;
+    mapping(address => uint256[]) public userEntries;
+
+    event EntryCreated(uint256 indexed id, address indexed creator, string data);
+    event EntryDeleted(uint256 indexed id, address indexed deletedBy);
+    event ContractPaused(address indexed by);
+    event ContractUnpaused(address indexed by);
+
+    error NotOwner(address caller);
+    error NotCreator(address caller, uint256 entryId);
+    error ContractIsPaused();
+    error EmptyData();
+    error EntryNotFound(uint256 id);
+
+    modifier onlyOwner() {
+        if (msg.sender != owner) revert NotOwner(msg.sender);
+        _;
+    }
+
+    modifier whenNotPaused() {
+        if (paused) revert ContractIsPaused();
+        _;
+    }
+
+    modifier entryExists(uint256 _id) {
+        if (entries[_id].creator == address(0)) revert EntryNotFound(_id);
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function createEntry(string memory _data) public whenNotPaused {
+        if (bytes(_data).length == 0) revert EmptyData();
+        uint256 newId = ++entryCount;
+        entries[newId] = Entry({
+            id: newId,
+            data: _data,
+            creator: msg.sender,
+            timestamp: block.timestamp
+        });
+        userEntries[msg.sender].push(newId);
+        emit EntryCreated(newId, msg.sender, _data);
+    }
+
+    function deleteEntry(uint256 _id) public entryExists(_id) {
+        if (entries[_id].creator != msg.sender && msg.sender != owner) {
+            revert NotCreator(msg.sender, _id);
+        }
+        emit EntryDeleted(_id, msg.sender);
+        delete entries[_id];
+    }
+
+    function getEntry(uint256 _id) public view entryExists(_id) returns (Entry memory) {
+        return entries[_id];
+    }
+
+    function getUserEntries(address _user) public view returns (uint256[] memory) {
+        return userEntries[_user];
+    }
+
+    function pause() public onlyOwner {
+        paused = true;
+        emit ContractPaused(msg.sender);
+    }
+
+    function unpause() public onlyOwner {
+        paused = false;
+        emit ContractUnpaused(msg.sender);
+    }
+}
+```
+
+---
+
+## 🚀 Workflow Deployment & Verification
+
+### 1. Pre-Deployment Test (Remix VM)
+Sebelum mengeluarkan gas asli di testnet, pastikan 10 skenario ini lulus di lingkungan lokal:
+*   [x] Buat entri normal (Cek data & event).
+*   [x] Coba entri kosong (Harus revert `EmptyData`).
+*   [x] Verifikasi kepemilikan di `userEntries`.
+*   [x] Pause kontrak dan pastikan fungsi tulis tertutup.
+*   [x] Hapus entri oleh pemilik vs orang asing (Cek izin).
+
+### 2. Deploy ke Sepolia Testnet
+*   **Environment:** Gunakan `Injected Provider - MetaMask`.
+*   **Network:** Pastikan MetaMask berada di **Sepolia Test Network**.
+*   **Gas:** Pastikan memiliki Sepolia ETH dari faucet.
+*   **Action:** Klik Deploy dan konfirmasi di popup MetaMask.
+
+### 3. Verifikasi di Etherscan (Standard Industri)
+Kontrak yang sudah di-deploy wajib di-verifikasi agar *source code*-nya transparan dan bisa berinteraksi langsung via Etherscan UI.
+*   Buka [sepolia.etherscan.io](https://sepolia.etherscan.io).
+*   Pilih **Verify and Publish**.
+*   Pilih **Single File** & versi compiler yang sesuai (misal 0.8.18).
+*   Paste kode sumber kontrak dan submit.
+*   **Hasil:** Kontrak akan mendapatkan tanda centang hijau ✅.
+
+---
+
+## 🚩 Milestone Akhir Minggu 3
+- [x] Berhasil menggabungkan Modifiers, Custom Errors, dan Structs dalam satu kontrak.
+- [x] Berhasil melakukan deployment ke testnet publik (Sepolia).
+- [x] Kontrak terverifikasi di Etherscan.
+- [x] Menamatkan seluruh dasar-dasar pengembangan DApp (Solidity + Web3.js).
+- [x] Implementasi 3 Kontrak Latihan Tambahan (Auction, Whitelist, Splitter).
+- [x] Paham "Pull over Push" pattern & "Checks-Effects-Interactions".
+
+---
+
+## 🛠️ Additional Practice Contracts
+
+### 1. Simple Auction (Lelelang Sederhana)
+Kontrak lelang di mana user bisa memberikan penawaran (bid) ETH. Menggunakan pola *Pull over Push* untuk pengembalian dana bidder yang kalah.
+
+**Test Scenarios:**
+1. Deploy dengan `_durationSeconds = 3600` (1 jam).
+2. Address A: `bid()` dengan 0.01 ETH → Berhasil.
+3. Address B: `bid()` dengan 0.005 ETH → Revert `BidTooLow`.
+4. Address B: `bid()` dengan 0.02 ETH → Berhasil, B jadi tertinggi.
+5. Address A: `withdraw()` → Mendapatkan kembali 0.01 ETH.
+6. `endAuction()` sebelum waktu habis → Revert `AuctionNotYetEnded`.
+
+```solidity
+// Lihat SimpleAuction.sol untuk kode lengkap
+```
+
+### 2. Whitelist Minter
+Kontrak pencetakan (minting) token dengan sistem daftar putih (whitelist) dan kontrol akses (Ownable + Pausable).
+
+**Test Scenarios:**
+1. Deploy `maxSupply=100`, `mintPrice=0.01 ETH`.
+2. `mint(1)` dari address non-whitelist → Revert `NotWhitelisted`.
+3. `addToWhitelist(addressA)` → Berhasil.
+4. `mint(1)` dari addressA (0.01 ETH) → Berhasil.
+5. `pause()` oleh owner → Berhasil.
+6. `mint(1)` saat paused → Revert `ContractPaused`.
+7. `addBatchToWhitelist([B, C, D])` → Berhasil.
+
+```solidity
+// Lihat WhitelistMinter.sol untuk kode lengkap
+```
+
+### 3. Split Payment (Pembayaran Bagi Hasil)
+Menerima ETH dan otomatis membaginya ke beberapa penerima berdasarkan persentase yang ditentukan (menggunakan basis points).
+
+**Test Scenarios:**
+1. Deploy dengan 3 address & persentase `[5000, 3000, 2000]` (50%, 30%, 20%).
+2. Kirim 1 ETH ke kontrak.
+3. Cek `balances[A]` → 0.5 ETH.
+4. `withdraw()` dari A → Berhasil.
+5. `updateSplit([A,B], [6000, 4000])` oleh owner → Berhasil.
+
+```solidity
+// Lihat SplitPayment.sol untuk kode lengkap
+```
+
+---
+
+## 💡 Hal Penting yang Perlu Dipahami
+
+1.  **Pull over Push Pattern:** Digunakan di `SimpleAuction` dan `SplitPayment`. Jangan langsung kirim ETH ke penerima (*push*), biarkan mereka menariknya sendiri (*pull*). Ini mencegah serangan *reentrancy* dan masalah gas limit pada loop.
+2.  **Checks-Effects-Interactions:** Urutan aman dalam fungsi:
+    *   **Checks:** Validasi (require/revert).
+    *   **Effects:** Update state (reset balance ke 0).
+    *   **Interactions:** Kirim dana atau panggil kontrak lain.
+3.  **Basis Points:** Menggunakan skala 10000 untuk 100% agar bisa menangani persentase desimal (misal 12.5% = 1250 bps).
+4.  **receive() function:** Fungsi khusus untuk menerima ETH yang dikirim langsung ke alamat kontrak tanpa memanggil fungsi tertentu. Tanpa ini, kiriman ETH mentah akan ditolak.
