@@ -1,0 +1,1091 @@
+{
+  "success": true,
+  "error": null,
+  "results": {
+    "detectors": [
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "withdraw",
+            "source_mapping": {
+              "start": 1510,
+              "length": 359,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "ExampleVulnerable",
+                "source_mapping": {
+                  "start": 786,
+                  "length": 1802,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41,
+                    42,
+                    43,
+                    44,
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51,
+                    52,
+                    53,
+                    54,
+                    55,
+                    56,
+                    57,
+                    58,
+                    59,
+                    60,
+                    61,
+                    62,
+                    63,
+                    64,
+                    65,
+                    66,
+                    67,
+                    68,
+                    69,
+                    70,
+                    71,
+                    72
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdraw(uint256)"
+            }
+          },
+          {
+            "type": "node",
+            "name": "(success,None) = msg.sender.call{value: amount}()",
+            "source_mapping": {
+              "start": 1636,
+              "length": 52,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                47
+              ],
+              "starting_column": 9,
+              "ending_column": 61
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 1510,
+                  "length": 359,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ExampleVulnerable",
+                    "source_mapping": {
+                      "start": 786,
+                      "length": 1802,
+                      "filename_relative": "src/ExampleVulnerable.sol",
+                      "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                      "filename_short": "src/ExampleVulnerable.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "external_calls"
+            }
+          },
+          {
+            "type": "node",
+            "name": "balances[msg.sender] -= amount",
+            "source_mapping": {
+              "start": 1743,
+              "length": 30,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                49
+              ],
+              "starting_column": 9,
+              "ending_column": 39
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 1510,
+                  "length": 359,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ExampleVulnerable",
+                    "source_mapping": {
+                      "start": 786,
+                      "length": 1802,
+                      "filename_relative": "src/ExampleVulnerable.sol",
+                      "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                      "filename_short": "src/ExampleVulnerable.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "variables_written",
+              "variable_name": "balances"
+            }
+          }
+        ],
+        "description": "Reentrancy in ExampleVulnerable.withdraw(uint256) (src/ExampleVulnerable.sol#45-51):\n\tExternal calls:\n\t- (success,None) = msg.sender.call{value: amount}() (src/ExampleVulnerable.sol#47)\n\tState variables written after the call(s):\n\t- balances[msg.sender] -= amount (src/ExampleVulnerable.sol#49)\n\tExampleVulnerable.balances (src/ExampleVulnerable.sol#24) can be used in cross function reentrancies:\n\t- ExampleVulnerable.balances (src/ExampleVulnerable.sol#24)\n\t- ExampleVulnerable.calculateReward(address) (src/ExampleVulnerable.sol#54-56)\n\t- ExampleVulnerable.deposit() (src/ExampleVulnerable.sol#37-42)\n\t- ExampleVulnerable.receive() (src/ExampleVulnerable.sol#68-71)\n\t- ExampleVulnerable.withdraw(uint256) (src/ExampleVulnerable.sol#45-51)\n",
+        "markdown": "Reentrancy in [ExampleVulnerable.withdraw(uint256)](src/ExampleVulnerable.sol#L45-L51):\n\tExternal calls:\n\t- [(success,None) = msg.sender.call{value: amount}()](src/ExampleVulnerable.sol#L47)\n\tState variables written after the call(s):\n\t- [balances[msg.sender] -= amount](src/ExampleVulnerable.sol#L49)\n\t[ExampleVulnerable.balances](src/ExampleVulnerable.sol#L24) can be used in cross function reentrancies:\n\t- [ExampleVulnerable.balances](src/ExampleVulnerable.sol#L24)\n\t- [ExampleVulnerable.calculateReward(address)](src/ExampleVulnerable.sol#L54-L56)\n\t- [ExampleVulnerable.deposit()](src/ExampleVulnerable.sol#L37-L42)\n\t- [ExampleVulnerable.receive()](src/ExampleVulnerable.sol#L68-L71)\n\t- [ExampleVulnerable.withdraw(uint256)](src/ExampleVulnerable.sol#L45-L51)\n",
+        "first_markdown_element": "src/ExampleVulnerable.sol#L45-L51",
+        "id": "a039ab2ab321be64fbab7e089fa3386da841b36485a9b6fb90afb11bec894990",
+        "check": "reentrancy-eth",
+        "impact": "High",
+        "confidence": "Medium"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "withdraw",
+            "source_mapping": {
+              "start": 1510,
+              "length": 359,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "ExampleVulnerable",
+                "source_mapping": {
+                  "start": 786,
+                  "length": 1802,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41,
+                    42,
+                    43,
+                    44,
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51,
+                    52,
+                    53,
+                    54,
+                    55,
+                    56,
+                    57,
+                    58,
+                    59,
+                    60,
+                    61,
+                    62,
+                    63,
+                    64,
+                    65,
+                    66,
+                    67,
+                    68,
+                    69,
+                    70,
+                    71,
+                    72
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdraw(uint256)"
+            }
+          },
+          {
+            "type": "node",
+            "name": "(success,None) = msg.sender.call{value: amount}()",
+            "source_mapping": {
+              "start": 1636,
+              "length": 52,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                47
+              ],
+              "starting_column": 9,
+              "ending_column": 61
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 1510,
+                  "length": 359,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ExampleVulnerable",
+                    "source_mapping": {
+                      "start": 786,
+                      "length": 1802,
+                      "filename_relative": "src/ExampleVulnerable.sol",
+                      "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                      "filename_short": "src/ExampleVulnerable.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "external_calls"
+            }
+          },
+          {
+            "type": "node",
+            "name": "Withdrawn(msg.sender,amount)",
+            "source_mapping": {
+              "start": 1828,
+              "length": 34,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                50
+              ],
+              "starting_column": 9,
+              "ending_column": 43
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 1510,
+                  "length": 359,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ExampleVulnerable",
+                    "source_mapping": {
+                      "start": 786,
+                      "length": 1802,
+                      "filename_relative": "src/ExampleVulnerable.sol",
+                      "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                      "filename_short": "src/ExampleVulnerable.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            },
+            "additional_fields": {
+              "underlying_type": "event"
+            }
+          }
+        ],
+        "description": "Reentrancy in ExampleVulnerable.withdraw(uint256) (src/ExampleVulnerable.sol#45-51):\n\tExternal calls:\n\t- (success,None) = msg.sender.call{value: amount}() (src/ExampleVulnerable.sol#47)\n\tEvent emitted after the call(s):\n\t- Withdrawn(msg.sender,amount) (src/ExampleVulnerable.sol#50)\n",
+        "markdown": "Reentrancy in [ExampleVulnerable.withdraw(uint256)](src/ExampleVulnerable.sol#L45-L51):\n\tExternal calls:\n\t- [(success,None) = msg.sender.call{value: amount}()](src/ExampleVulnerable.sol#L47)\n\tEvent emitted after the call(s):\n\t- [Withdrawn(msg.sender,amount)](src/ExampleVulnerable.sol#L50)\n",
+        "first_markdown_element": "src/ExampleVulnerable.sol#L45-L51",
+        "id": "455b942ee7c16792c9bfe70c1792092b3d1b9423236f1afa14f053d6636188da",
+        "check": "reentrancy-events",
+        "impact": "Low",
+        "confidence": "Medium"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "isDepositRecent",
+            "source_mapping": {
+              "start": 2346,
+              "length": 121,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                64,
+                65,
+                66
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "ExampleVulnerable",
+                "source_mapping": {
+                  "start": 786,
+                  "length": 1802,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41,
+                    42,
+                    43,
+                    44,
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51,
+                    52,
+                    53,
+                    54,
+                    55,
+                    56,
+                    57,
+                    58,
+                    59,
+                    60,
+                    61,
+                    62,
+                    63,
+                    64,
+                    65,
+                    66,
+                    67,
+                    68,
+                    69,
+                    70,
+                    71,
+                    72
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "isDepositRecent()"
+            }
+          },
+          {
+            "type": "node",
+            "name": "block.timestamp - lastDepositTime < 3600",
+            "source_mapping": {
+              "start": 2410,
+              "length": 50,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                65
+              ],
+              "starting_column": 9,
+              "ending_column": 59
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "isDepositRecent",
+                "source_mapping": {
+                  "start": 2346,
+                  "length": 121,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    64,
+                    65,
+                    66
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ExampleVulnerable",
+                    "source_mapping": {
+                      "start": 786,
+                      "length": 1802,
+                      "filename_relative": "src/ExampleVulnerable.sol",
+                      "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                      "filename_short": "src/ExampleVulnerable.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "isDepositRecent()"
+                }
+              }
+            }
+          }
+        ],
+        "description": "ExampleVulnerable.isDepositRecent() (src/ExampleVulnerable.sol#64-66) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- block.timestamp - lastDepositTime < 3600 (src/ExampleVulnerable.sol#65)\n",
+        "markdown": "[ExampleVulnerable.isDepositRecent()](src/ExampleVulnerable.sol#L64-L66) uses timestamp for comparisons\n\tDangerous comparisons:\n\t- [block.timestamp - lastDepositTime < 3600](src/ExampleVulnerable.sol#L65)\n",
+        "first_markdown_element": "src/ExampleVulnerable.sol#L64-L66",
+        "id": "d8dc74d15d77e1ec117f6efd503d85ed253e9aed52f6e1a57d4d905175ce4ee3",
+        "check": "timestamp",
+        "impact": "Low",
+        "confidence": "Medium"
+      },
+      {
+        "elements": [
+          {
+            "type": "function",
+            "name": "withdraw",
+            "source_mapping": {
+              "start": 1510,
+              "length": 359,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                45,
+                46,
+                47,
+                48,
+                49,
+                50,
+                51
+              ],
+              "starting_column": 5,
+              "ending_column": 6
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "contract",
+                "name": "ExampleVulnerable",
+                "source_mapping": {
+                  "start": 786,
+                  "length": 1802,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    23,
+                    24,
+                    25,
+                    26,
+                    27,
+                    28,
+                    29,
+                    30,
+                    31,
+                    32,
+                    33,
+                    34,
+                    35,
+                    36,
+                    37,
+                    38,
+                    39,
+                    40,
+                    41,
+                    42,
+                    43,
+                    44,
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51,
+                    52,
+                    53,
+                    54,
+                    55,
+                    56,
+                    57,
+                    58,
+                    59,
+                    60,
+                    61,
+                    62,
+                    63,
+                    64,
+                    65,
+                    66,
+                    67,
+                    68,
+                    69,
+                    70,
+                    71,
+                    72
+                  ],
+                  "starting_column": 1,
+                  "ending_column": 2
+                }
+              },
+              "signature": "withdraw(uint256)"
+            }
+          },
+          {
+            "type": "node",
+            "name": "(success,None) = msg.sender.call{value: amount}()",
+            "source_mapping": {
+              "start": 1636,
+              "length": 52,
+              "filename_relative": "src/ExampleVulnerable.sol",
+              "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+              "filename_short": "src/ExampleVulnerable.sol",
+              "is_dependency": false,
+              "lines": [
+                47
+              ],
+              "starting_column": 9,
+              "ending_column": 61
+            },
+            "type_specific_fields": {
+              "parent": {
+                "type": "function",
+                "name": "withdraw",
+                "source_mapping": {
+                  "start": 1510,
+                  "length": 359,
+                  "filename_relative": "src/ExampleVulnerable.sol",
+                  "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                  "filename_short": "src/ExampleVulnerable.sol",
+                  "is_dependency": false,
+                  "lines": [
+                    45,
+                    46,
+                    47,
+                    48,
+                    49,
+                    50,
+                    51
+                  ],
+                  "starting_column": 5,
+                  "ending_column": 6
+                },
+                "type_specific_fields": {
+                  "parent": {
+                    "type": "contract",
+                    "name": "ExampleVulnerable",
+                    "source_mapping": {
+                      "start": 786,
+                      "length": 1802,
+                      "filename_relative": "src/ExampleVulnerable.sol",
+                      "filename_absolute": "/Users/aldngrha/Documents/Projects/blockchain/advanced-foundry-9/src/ExampleVulnerable.sol",
+                      "filename_short": "src/ExampleVulnerable.sol",
+                      "is_dependency": false,
+                      "lines": [
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66,
+                        67,
+                        68,
+                        69,
+                        70,
+                        71,
+                        72
+                      ],
+                      "starting_column": 1,
+                      "ending_column": 2
+                    }
+                  },
+                  "signature": "withdraw(uint256)"
+                }
+              }
+            }
+          }
+        ],
+        "description": "Low level call in ExampleVulnerable.withdraw(uint256) (src/ExampleVulnerable.sol#45-51):\n\t- (success,None) = msg.sender.call{value: amount}() (src/ExampleVulnerable.sol#47)\n",
+        "markdown": "Low level call in [ExampleVulnerable.withdraw(uint256)](src/ExampleVulnerable.sol#L45-L51):\n\t- [(success,None) = msg.sender.call{value: amount}()](src/ExampleVulnerable.sol#L47)\n",
+        "first_markdown_element": "src/ExampleVulnerable.sol#L45-L51",
+        "id": "0504d87195d9f4bd78fe44e329536b26caed5f6cc691d50927bb8eee9982f79a",
+        "check": "low-level-calls",
+        "impact": "Informational",
+        "confidence": "High"
+      }
+    ]
+  }
+}

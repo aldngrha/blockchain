@@ -1,0 +1,21 @@
+# Transfer entity — immutable (never updated after creation)
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes!
+  to: Bytes!
+  value: BigDecimal!
+  blockNumber: BigInt!
+  timestamp: BigInt!
+  txHash: Bytes!
+}
+
+# TokenHolder — mutable (balance berubah terus)
+type TokenHolder @entity(immutable: false) {
+  id: Bytes!
+  address: Bytes!
+  balance: BigDecimal!
+  totalReceived: BigDecimal!
+  totalSent: BigDecimal!
+  transferCount: Int!
+  lastTransferBlock: BigInt!
+}

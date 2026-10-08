@@ -1,0 +1,15 @@
+{
+  "name": "weth-sepolia-events",
+  "version": "0.1.0",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --studio weth-sepolia-events",
+    "create-local": "graph create --node http://localhost:8020/ weth-sepolia-events",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 weth-sepolia-events"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.98.1",
+    "@graphprotocol/graph-ts": "0.37.0"
+  }
+}

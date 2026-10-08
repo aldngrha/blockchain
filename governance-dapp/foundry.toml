@@ -1,0 +1,26 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+solc = "0.8.28"
+# Governor stack (5 OZ bases) compiles to 28857 runtime bytes WITHOUT via-ir, which
+# breaches the EIP-170 limit of 24576 that anvil AND real chains enforce. via-ir pulls
+# it under the cap. Build is slower, that is the trade-off.
+via_ir = true
+# Governor size experiment: default 200 runs gave 31245 runtime bytes via-ir.
+# Higher run counts let the optimizer deduplicate harder and shrink the runtime.
+optimizer_runs = 1000
+gas_reports = ["GovernanceToken", "GovernorContract", "Treasury"]
+# Deploy script nulis deployments/<chainId>.json: default fs_permission cuma read,
+# vm.createDir/vm.writeFile bakal revert tanpa ini.
+fs_permissions = [{ access = "read-write", path = "./" }]
+
+# Roadmap Project 2 (SPEC section 7). Test suite dijalankan penuh tiap build.
+[fuzz]
+runs = 256
+
+[invariant]
+runs = 50
+depth = 32

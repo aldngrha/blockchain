@@ -1,0 +1,59 @@
+# Get all transfers (latest 10)
+{
+  transfers(
+    orderBy: blockNumber
+    orderDirection: desc
+    first: 10
+  ) {
+    id
+    from
+    to
+    value
+    blockNumber
+    timestamp
+    txHash
+  }
+}
+
+# Get transfers from a specific address
+{
+  transfers(
+    where: { from: "0x14a88FA01d5EEe6AcA04656dFc5e57D78F2F5bA0" }
+    orderBy: blockNumber
+    orderDirection: desc
+  ) {
+    from
+    to
+    value
+    blockNumber
+  }
+}
+
+# Get top holders
+{
+  tokenHolders(
+    orderBy: balance
+    orderDirection: desc
+    first: 10
+  ) {
+    address
+    balance
+    totalReceived
+    totalSent
+    transferCount
+  }
+}
+
+# Get total volume transferred
+{
+  transfers(
+    orderBy: value
+    orderDirection: desc
+    first: 5
+  ) {
+    from
+    to
+    value
+    txHash
+  }
+}

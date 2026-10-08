@@ -1,0 +1,19 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+gas_reports = ["RewardToken", "StakingPool"]
+# Deploy script nulis deployments/<chainId>.json: default fs_permission cuma read,
+# vm.createDir/vm.writeFile bakal revert tanpa ini.
+fs_permissions = [{ access = "read-write", path = "./" }]
+
+# Preset sesuai SPEC §7 (dipakai mulai Sel 15 Sep)
+[fuzz]
+runs = 256
+
+[invariant]
+runs = 100           # SPEC §7 = 256 — dipangkas biar iterasi cepat, naikin lagi sebelum DoD
+depth = 32           # idem
+fail-on-revert = true # revert di handler = invariant gagal (mis. assert I-5)

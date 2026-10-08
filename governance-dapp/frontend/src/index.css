@@ -1,0 +1,728 @@
+/* Draft without direction (no DESIGN.md): ENERGY 1 / RHYTHM 1 / MOTION 1.
+   Fixed light theme on purpose: a data-first dashboard read in daylight, and a
+   hand-picked palette has the lowest contrast risk on a light surface.
+   Palette (R-29): stone neutrals as the base + one accent, civic blue, for
+   primary actions and links (governance is the product's one identity color)
+   + green reserved for "passed / for votes" + red for "against / defeated /
+   errors" + amber only inside the Pending badge. Every badge text color is a
+   dark shade on a light tint, tested for WCAG AA (4.5:1).
+   Shared visual family with the other roadmap frontends (same stone base and
+   system type), so the series reads as one portfolio; the blue accent is what
+   sets governance apart from the green staking dashboard. */
+
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+  --text: #1c1917;
+  --text-muted: #57534e;
+  --accent: #1d4ed8;
+  --accent-strong: #1e3fa8;
+  --accent-soft: #e8eefc;
+  --accent-border: #c3d2f5;
+  --danger: #b42318;
+  --danger-strong: #92190f;
+  --danger-soft: #fdecea;
+  --danger-border: #f3c2bb;
+  --passed: #14602b;
+  --passed-soft: #eaf5ec;
+  --passed-border: #bfe3c8;
+  --pending: #854d0e;
+  --pending-soft: #fef9c3;
+  --pending-border: #f5e6a8;
+  --radius-s: 8px;
+  --radius-m: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  word-break: break-all;
+}
+
+.app {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 8px 0 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.header-sub {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 20px;
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+/* Block references: the identity motif. Governance lives in block numbers
+   (snapshot, deadline, eta), so every block reference gets the same mono chip. */
+.block-ref {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+.meta-estimate {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Top strip: the three numbers the whole page is about. */
+.treasury-strip {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 16px 20px;
+}
+
+@media (min-width: 560px) {
+  .treasury-strip {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.position-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+@media (min-width: 560px) {
+  .position-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.position-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.stat-label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+
+.stat-small {
+  font-size: 1.05rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.stat-hint {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin: 4px 0;
+}
+
+/* Status badges: one tint per real state, never decorative. */
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 4px;
+  border: 1px solid;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.badge-neutral {
+  background: #f5f5f4;
+  border-color: var(--border);
+  color: #44403c;
+}
+
+.badge-active {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent-strong);
+}
+
+.badge-passed {
+  background: var(--passed-soft);
+  border-color: var(--passed-border);
+  color: var(--passed);
+}
+
+.badge-defeated {
+  background: var(--danger-soft);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.badge-pending {
+  background: var(--pending-soft);
+  border-color: var(--pending-border);
+  color: var(--pending);
+}
+
+/* Proposal cards: the list is links, so hover is a border lift only. */
+.proposal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.proposal-list-head h2 {
+  margin: 0;
+}
+
+.proposal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  padding: 16px 20px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.proposal-card:hover {
+  border-color: var(--border-strong);
+}
+
+.proposal-card:focus-visible {
+  outline-offset: 3px;
+}
+
+.proposal-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.proposal-id {
+  color: var(--text-muted);
+}
+
+.proposal-description {
+  margin: 0;
+  font-size: 1rem;
+  overflow-wrap: anywhere;
+}
+
+.detail-description {
+  font-size: 1.05rem;
+}
+
+.proposal-meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px 24px;
+  margin: 0;
+}
+
+@media (min-width: 560px) {
+  .proposal-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.proposal-meta dt,
+.vote-count-label {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.proposal-meta dd {
+  margin: 0;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.detail-meta {
+  margin-top: 8px;
+}
+
+.detail-meta > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Vote tally. For is green, Against is red, Abstain neutral: the same
+   semantic colors as the badges, so the tally and the history read alike. */
+.vote-counts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.vote-count {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.vote-count-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.vote-counts-big .vote-count-value {
+  font-size: 1.3rem;
+}
+
+.vote-for .vote-count-value {
+  color: var(--passed);
+}
+
+.vote-against .vote-count-value {
+  color: var(--danger);
+}
+
+/* Quorum bar: the one progress element, green only once actually reached. */
+.quorum {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.quorum-bar {
+  height: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quorum-fill {
+  height: 100%;
+  background: var(--accent);
+}
+
+.quorum-fill-reached {
+  background: var(--passed);
+}
+
+.quorum-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Vote buttons: the three options keep their semantic colors on tap targets. */
+.vote-buttons {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 12px 0 4px;
+}
+
+@media (min-width: 480px) {
+  .vote-buttons {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.vote-disable-reason {
+  margin: 8px 0;
+  padding: 10px 12px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.btn-back {
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0 8px;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.btn-back:hover {
+  color: var(--accent-strong);
+}
+
+/* Vote history rows: one line per VoteCast event, wrapping on mobile. */
+.vote-history {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.vote-history-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.vote-history-row:first-child {
+  border-top: none;
+}
+
+.vote-history-support {
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 1px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: #f5f5f4;
+  color: #44403c;
+}
+
+.vote-history-support.vote-for {
+  background: var(--passed-soft);
+  border-color: var(--passed-border);
+  color: var(--passed);
+}
+
+.vote-history-support.vote-against {
+  background: var(--danger-soft);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.vote-history-weight {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.vote-history-reason {
+  color: var(--text-muted);
+  font-style: italic;
+  flex-basis: 100%;
+}
+
+/* Forms (delegate, create proposal). */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-hint {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.field label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.input {
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-s);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.input-area {
+  resize: vertical;
+  min-height: 0;
+  line-height: 1.5;
+}
+
+.input:hover:not(:disabled) {
+  border-color: var(--text-muted);
+}
+
+.input:disabled {
+  background: var(--bg);
+  color: var(--text-muted);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.field-error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+
+.calldata-preview {
+  display: block;
+  padding: 8px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  font-size: 0.75rem;
+  overflow-wrap: anywhere;
+}
+
+/* Buttons. min-height 44px keeps every control a valid touch target. */
+.btn {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #f5f5f4;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--danger-strong);
+}
+
+.btn-vote-for {
+  background: var(--passed);
+  color: #ffffff;
+}
+
+.btn-vote-for:hover:not(:disabled) {
+  background: #0f4a21;
+}
+
+.btn-vote-against {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.btn-vote-against:hover:not(:disabled) {
+  background: var(--danger-strong);
+}
+
+.btn:disabled {
+  background: var(--border);
+  border-color: transparent;
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  min-height: 44px;
+  padding: 0 8px;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  color: var(--accent-strong);
+}
+
+.btn-ghost:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+/* Banners and feedback. */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-m);
+  border: 1px solid;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.banner-info {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent-strong);
+}
+
+.banner-success {
+  background: var(--passed-soft);
+  border-color: var(--passed-border);
+  color: var(--passed);
+}
+
+.banner-error {
+  background: var(--danger-soft);
+  border-color: var(--danger-border);
+  color: var(--danger);
+}
+
+.banner-error p,
+.banner-success p {
+  margin: 0;
+}
+
+.banner-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+}
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notice ol {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.notice ol li {
+  margin-bottom: 6px;
+}
+
+.notice p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.footer {
+  padding: 24px 0 32px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.footer p {
+  margin: 4px 0;
+}

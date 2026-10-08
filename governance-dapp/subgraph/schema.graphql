@@ -1,0 +1,46 @@
+# Index governance activity: one Proposal per on-chain proposal, one Vote per
+# VoteCast event, one Voter per address that voted at least once.
+
+type Proposal @entity {
+  id: ID! # stringified proposalId
+  proposalId: BigInt!
+  proposer: Bytes!
+  targets: [Bytes!]!
+  values: [BigInt!]!
+  calldatas: [Bytes!]!
+  description: String!
+  voteStart: BigInt! # block number when voting opens
+  voteEnd: BigInt! # block number when voting closes
+  # Last state observed from events: Pending (created), Queued, Executed, Canceled.
+  # Active and Defeated never emit an on-chain event, so the frontend computes them
+  # off-chain from voteEnd + tallies; this field only tracks the indexed lifecycle.
+  status: String!
+  forVotes: BigInt!
+  againstVotes: BigInt!
+  abstainVotes: BigInt!
+  etaSeconds: BigInt # timelock ETA, set on ProposalQueued
+  executedAt: BigInt # block timestamp of ProposalExecuted
+  canceledAt: BigInt # block timestamp of ProposalCanceled
+  createdAtBlock: BigInt!
+  createdAtTimestamp: BigInt!
+  votes: [Vote!]! @derivedFrom(field: "proposal")
+}
+
+type Vote @entity {
+  id: ID! # "<proposalId>-<voter>"
+  proposal: Proposal!
+  voter: Voter!
+  support: Int! # 0 = against, 1 = for, 2 = abstain (Governor Bravo ordering)
+  weight: BigInt! # voting power at the proposal snapshot
+  reason: String
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+}
+
+type Voter @entity {
+  id: ID! # lowercase hex address
+  address: Bytes!
+  totalWeightCast: BigInt!
+  voteCount: BigInt!
+  votes: [Vote!]! @derivedFrom(field: "voter")
+}

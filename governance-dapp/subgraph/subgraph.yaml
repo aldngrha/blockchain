@@ -1,0 +1,43 @@
+specVersion: 1.2.0
+description: Indexes the governance lifecycle of the Governance dApp (proposals, votes, queue, execution, cancellation).
+indexerHints:
+  prune: true
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: GovernorContract
+    network: sepolia
+    source:
+      # GANTI SETELAH DEPLOY SEPOLIA: address Governor hasil script/DeployGovernance.s.sol
+      # (tersimpan di deployments/11155111.json, key "contracts"."Governor").
+      # Placeholder di bawah sengaja address nol dan TIDAK BISA dideploy sebelum diganti.
+      address: "0x0000000000000000000000000000000000000000"
+      abi: Governor
+      # GANTI SETELAH DEPLOY SEPOLIA: nomor block Sepolia tempat kontrak Governor
+      # terbentuk (lihat output broadcast script). startBlock 0 membuat indexing lambat.
+      startBlock: 0
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - Proposal
+        - Vote
+        - Voter
+      abis:
+        - name: Governor
+          file: ./abis/Governor.json
+      eventHandlers:
+        # Signature event mengikuti OZ v5.4 persis: hanya `voter` di VoteCast yang indexed.
+        - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
+          handler: handleProposalCreated
+        - event: VoteCast(indexed address,uint256,uint8,uint256,string)
+          handler: handleVoteCast
+        - event: ProposalQueued(uint256,uint256)
+          handler: handleProposalQueued
+        - event: ProposalExecuted(uint256)
+          handler: handleProposalExecuted
+        - event: ProposalCanceled(uint256)
+          handler: handleProposalCanceled
+      file: ./src/governance.ts

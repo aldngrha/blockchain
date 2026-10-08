@@ -1,0 +1,27 @@
+# Build artifacts
+node_modules/
+dist/
+out/
+cache/
+broadcast/
+
+# Forge dependencies: fresh clone = `forge install` (didokumentasikan di tiap README)
+lib/
+
+# Foundry cache berisi sensitive values dari run script (private key dari broadcast)
+**/cache/
+**/broadcast/
+
+# Local junk
+.DS_Store
+.freebuff/
+.zcode/
+
+# Secrets
+.env
+.env.local
+*.pem
+
+# OS/editor
+*.swp
+.idea/
