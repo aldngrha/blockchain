@@ -5,6 +5,7 @@ dist/
 out/
 cache/
 broadcast/
+coverage/
 
 # Forge dependencies: fresh clone = `forge install` (didokumentasikan di tiap README)
 lib/
@@ -33,15 +34,3 @@ lib/
 .cache
 *.tsbuildinfo
 
-# ===== Mini-blockchain April (week 1-3) =====
-# output
-*.tgz
-
-# code coverage
-coverage/
-*.lcov
-
-# logs
-logs/
-_.log
-report.[0-9]_[0-9]_[0-9]_[0-9]_.json

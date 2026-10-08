@@ -1,41 +1,42 @@
-# Mini-Blockchain (Week 1 Fundamentals)
+# Blockchain Learning Workspace
 
-This project is a deep dive into the core fundamentals of blockchain technology, built from scratch using TypeScript and the Bun runtime.
+Workspace belajar blockchain engineering — mengikuti [ROADMAP.md](ROADMAP.md) (3 Ags 2026 → 21 Jan 2027, 172 hari), satu proyek Solidity/Foundry per materi. Tiap proyek punya `SPEC.md`, `README.md`, `devlog/`, dan test suite sendiri.
 
-## 🚀 Projects Included
+## Struktur
 
-This repository contains several modules that simulate different aspects of a blockchain:
+### Proyek
 
-### 1. **Core Blockchain (`blockchain.ts`)**
-A minimal implementation of a blockchain including:
-- **Hashing**: Using SHA-256 to secure block data.
-- **Chaining**: Linking blocks via `previousHash`.
-- **Proof of Work**: Mining blocks with adjustable difficulty (Nonce).
-- **Validation**: A function to detect if the chain has been tampered with.
+| Dir | Isi |
+|---|---|
+| [defi-staking/](defi-staking/) | **Project 1 — DeFi Staking Protocol.** Staking pool dengan reward math pola Synthetix (`rewardPerToken` accumulator, mint-on-claim). Foundry: 75/75 test (unit + fuzz + invariant handler-based), coverage 100%. Frontend Vite + React + wagmi + RainbowKit. |
+| [governance-dapp/](governance-dapp/) | **Governance:** GovernanceToken (votes/delegation), GovernorContract (OZ v5 Governor), Treasury. Deploy + subgraph + frontend (proposal list, voting via `getPastVotes`, delegate). Foundry: 33/33 test. |
+| [simple-dex/](simple-dex/) | DEX minimal — AMM core, ada `SPEC.md`, `devlog/`, `deployments/`. |
+| [nft-minting-dapp/](nft-minting-dapp/) | NFT minting + frontend. |
+| [foundry-practice/](foundry-practice/) | Latihan Foundry harian (fork test, scripting, ds-test patterns). |
+| [cyfrin-course/](cyfrin-course/) | Coursework Cyfrin Advanced Foundry (sections 1–8). |
+| [security/](security/) | Materi keamanan: Ethernaut review, Slither report, security checklist, best practices. |
+| [web3-frontend/](web3-frontend/) | Fundamentals frontend: ethers, wagmi app, WETH event listener. |
+| [docs/](docs/) | Rencana & catatan lintas proyek (`docs/plans/`). |
 
-### 2. **Mining & Math Simulator (`math_test.ts`)**
-A script to visualize the mathematical principles:
-- **Deterministic Hashing**: Same input, same output.
-- **Avalanche Effect**: Small changes in input lead to total change in output.
-- **Probability**: Demonstrating why mining time increases exponentially with difficulty (16x per leading zero).
+### Dokumen belajar (root)
 
-### 3. **Bitcoin Difficulty Simulator (`bitcoin_sim.ts`)**
-A simulation of Bitcoin's dynamic difficulty adjustment:
-- Watches the mining time of each block.
-- Automatically increases/decreases difficulty to keep block times stable.
+- **[ROADMAP.md](ROADMAP.md)** — jadwal harian lengkap, dari titik lanjut sampai silabus beres.
+- **[RESUME-HERE.md](RESUME-HERE.md)** — status terkini: posisi progress, hasil catch-up, langkah berikutnya. **Mulai dari sini kalau balik lagi setelah lama nggak buka.**
+- **[STUDY-GUIDE.md](STUDY-GUIDE.md)** — ringkasan konsep per topik.
+- **[PROBLEM-BOOK.md](PROBLEM-BOOK.md)** — kumpulan masalah yang ketemu + solusinya (knowledge base debugging).
 
-### 4. **Wallet Generator (`wallet.ts`)**
-An Ethereum-compatible wallet generator using `viem`:
-- Generates 12-word mnemonics (BIP-39).
-- Derives valid EVM Addresses from private keys.
+## Menjalankan test
 
---- 
+Tiap proyek Foundry mandiri (tanpa workspace root build):
 
-## 🛠️ Getting Started
-
-### Prerequisites
-- [Bun](https://bun.sh/) installed on your machine.
-
-### Installation
 ```bash
-bun install
+cd defi-staking && forge test        # atau proyek lain
+```
+
+`lib/` (forge deps) nggak di-commit — clone fresh = `forge install` dulu (terdokumentasi di README tiap proyek). Frontend: `npm install && npm run build` di `<project>/frontend/`.
+
+## Konvensi
+
+- **Devlog harian** di `<project>/devlog/` — apa yang dikerjain, masalah, solusi.
+- **Konten publishable** (thread, artikel, draft) di `<project>/content/` — draft, bukan final.
+- **Spec-first:** fitur baru nulis `SPEC.md` dulu (edge cases E1–E17, invariants I-1…I-8), baru kode + test TDD.
