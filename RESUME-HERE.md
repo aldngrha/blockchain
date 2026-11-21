@@ -1,6 +1,46 @@
 # RESUME-HERE: Catch-up ROADMAP + lanjutan silabus
 
-> Bookmark session, terakhir diperbarui: 7 Okt 2026 siang. Catch-up 16 Sep-6 Okt: SELESAI 100%. Lanjutan: batch 7-9 Okt sedang berjalan. User memutuskan: track "cari client" (10 Okt dst) DILEWATKAN, fokus menuntaskan silabus teknis dulu.
+> Bookmark session, terakhir diperbarui: 18 Nov 2026. Catch-up 16 Sep-6 Okt SELESAI. Batch 7-9 Okt SELESAI. Batch 10-27 Okt SELESAI 12 Okt. Batch 28-31 Okt SELESAI 18 Nov (artefaknya menyusul, jadwal aslinya 28-31 Okt). Vault TIDAK ditulis untuk batch ini, sesuai keputusan user.
+
+## Batch 28-31 Okt: SELESAI (18 Nov 2026)
+
+Konteks: 28-31 Okt terlewat, artefaknya belum ada. Dikerjakan 18 Nov, semua diverifikasi sendiri di mesin lokal.
+
+| Tanggal | Deliverable | Status |
+|---|---|---|
+| 28-29 Okt | `docs/uniswap-v3-notes.md` (concentrated liquidity, tick, `sqrtPriceX96`, diagram arsitektur, swap execution path, `TickMath`/`SqrtPriceMath`, fee growth, oracle, tabel efisiensi modal) | selesai |
+| 30 Okt | `docs/aave-v3-liquidation-sim.md` (interest rate model dua lereng, tabel HF vs penurunan harga, matematika bonus likuidator, cara reproduksi di spreadsheet) | selesai |
+| 31 Okt | `aave-v3-flashloan/` (receiver + plugin action ber-allowlist + mock pool + SPEC + devlog + deploy script) | selesai, fork mainnet terverifikasi |
+
+**Verifikasi yang dijalankan sendiri:** `forge test` lokal aave-v3-flashloan **10/10 hijau** (termasuk 1 fuzz test). Fork mainnet **2/2 hijau** lawan Pool Aave v3 `0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2`: flash loan 1.000 USDC, premium 500.000 unit (0,05%), saldo aUSDC naik tepat sebesar premium. Deploy anvil fork port 8550 jalan, `deployments/31337.json` tertulis, dan satu flash loan sungguhan via `cast` sukses (`lastAmount` 1e9, `lastPremium` 500000). Data Uniswap v3 di notes dibaca on-chain block 26439489, bukan dari artikel.
+
+**Temuan teknis yang masuk devlog:** (1) Aave v3 tidak menyimpan underlying di `Pool`, tapi di aToken, jadi mengukur premium lewat saldo Pool selalu nol; (2) `getTreasury()` revert di PoolAddressesProvider mainnet karena versi v3 di mainnet lebih baru; (3) premium flash loan harus sudah ada sebelum transaksi, bukan hasil pinjaman; (4) mock pool tanpa `transferFrom` membuat test tidak menguji pembayaran sama sekali.
+
+**Berikutnya (1-8 Nov):** review DeFi week 1, mainnet fork interaksi langsung (swap v3 + supply/borrow Aave), GMX/perp DEX research, MEV Flashbots, oracle security (Mango Markets), reentrancy advanced, Code4rena contest. Belum ada artefak satu pun untuk tanggal-tanggal itu.
+
+## Batch 10-27 Okt: DIBANGUN ULANG (12 Okt 2026)
+
+Konteks: vault punya catatan silabus ini di tanggal Jul 2026, tapi artefaknya tidak ada. User memutuskan bikin ulang di repo ini. Track cari client tetap di-skip.
+
+**Verifikasi dulu (semua hijau di mesin lokal):** defi-staking 75/75, governance-dapp 33/33, simple-dex 53/53 = 161 test. Lint 0 error dan build exit 0 untuk 3 frontend. Git bersih dan sinkron dengan origin/main.
+
+**Yang dibangun:**
+
+| Tanggal | Deliverable | Status |
+|---|---|---|
+| 17 Okt | `docs/how-audit-contests-work.md` (Code4rena vs Sherlock vs Codehawks vs Cantina, alur contest, severity, studi kasus) | selesai |
+| 18-19 Okt | `security/AUDIT-TEMPLATE.md` (template finding, panduan severity, uji sebelum submit, anti-pattern) | selesai |
+| 24 Okt | `docs/l2-deep-dive.md` (fraud vs validity proof, angka L2Beat, framework stage, bridging, langkah deploy zkSync) | selesai |
+| 25 Okt | `ccip-crosschain/` (project Foundry: sender + receiver + 24 test + SPEC + devlog + deploy script) | selesai, deploy lokal terverifikasi |
+| 26 Okt | `docs/defi-protocol-onepager.md` (Aave v3, plus data dibaca langsung dari mainnet) | selesai |
+
+**Yang di-skip (bukan teknis atau track cari client):** 10, 12-16 Okt (cari client), 11 Okt (artikel Mirror, draft sudah ada), 20 Okt (daftar ETHGlobal), 21 Okt (portfolio polish), 22 Okt (review bulanan), 23 dan 27 Okt (client onboarding).
+
+**Verifikasi yang sudah dijalankan sendiri:** `forge test` ccip-crosschain 24/24 hijau. Deploy lokal anvil port 8549 berhasil, `deployments/31337.json` tertulis, dicek lewat `cast` (getRouter, supportsInterface 0x85572ffb true, defaultGasLimit 200000). Data Aave dibaca on-chain dari Pool mainnet `0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2` block 26175066.
+
+**Langkah manual user yang masih menumpuk:** deploy ccip-crosschain ke Sepolia + Arbitrum Sepolia (butuh router address dan chain selector dari CCIP directory resmi, plus `setTrustedSender` di receiver), deploy zkSync Era testnet (butuh `foundry-zksync`), dan semua item lama (deploy Sepolia/Arbitrum Sepolia 3 project, Vercel, Slither re-run, subgraph Studio, publish konten).
+
+**28-31 Okt:** SELESAI 18 Nov, lihat section paling atas. Sebelum itu, batch ini sempat jadi pekerjaan yang menggantung selama 19 hari.
 
 ## Hasil catch-up (16 Sep s/d 6 Okt): SELESAI, diverifikasi final 7 Okt
 

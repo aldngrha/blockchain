@@ -11,12 +11,14 @@ Workspace belajar blockchain engineering — mengikuti [ROADMAP.md](ROADMAP.md) 
 | [defi-staking/](defi-staking/) | **Project 1 — DeFi Staking Protocol.** Staking pool dengan reward math pola Synthetix (`rewardPerToken` accumulator, mint-on-claim). Foundry: 75/75 test (unit + fuzz + invariant handler-based), coverage 100%. Frontend Vite + React + wagmi + RainbowKit. |
 | [governance-dapp/](governance-dapp/) | **Governance:** GovernanceToken (votes/delegation), GovernorContract (OZ v5 Governor), Treasury. Deploy + subgraph + frontend (proposal list, voting via `getPastVotes`, delegate). Foundry: 33/33 test. |
 | [simple-dex/](simple-dex/) | DEX minimal — AMM core, ada `SPEC.md`, `devlog/`, `deployments/`. |
+| [ccip-crosschain/](ccip-crosschain/) | **Cross-chain (25 Okt):** `CrossChainSender` + `MessageReceiver` untuk Chainlink CCIP. 24/24 test hijau, deploy lokal anvil terverifikasi. Deploy testnet belum. |
+| [aave-v3-flashloan/](aave-v3-flashloan/) | **Flash loan (31 Okt):** receiver Aave v3 dengan plugin action ber-allowlist. 10 test lokal + 2 test fork mainnet melawan Pool Aave v3 asli (premium 0,05% terverifikasi pindah ke aToken). Deploy anvil fork terverifikasi. |
 | [nft-minting-dapp/](nft-minting-dapp/) | NFT minting + frontend. |
 | [foundry-practice/](foundry-practice/) | Latihan Foundry harian (fork test, scripting, ds-test patterns). |
 | [cyfrin-course/](cyfrin-course/) | Coursework Cyfrin Advanced Foundry (sections 1–8). |
-| [security/](security/) | Materi keamanan: Ethernaut review, Slither report, security checklist, best practices. |
+| [security/](security/) | Materi keamanan: Ethernaut review, Slither report, security checklist, best practices, template finding audit. |
 | [web3-frontend/](web3-frontend/) | Fundamentals frontend: ethers, wagmi app, WETH event listener. |
-| [docs/](docs/) | Rencana & catatan lintas proyek (`docs/plans/`). |
+| [docs/](docs/) | Catatan lintas proyek: audit contest, L2 deep dive, one-pager Aave v3, simulasi likuidasi Aave v3, catatan Uniswap v3 (tick, `sqrtPriceX96`, swap execution path), plus rencana di `docs/plans/`. |
 
 ### Dokumen belajar (root)
 

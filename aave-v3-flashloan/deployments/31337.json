@@ -1,0 +1,8 @@
+{
+  "chainId": 31337,
+  "deployedAt": 1794977555000,
+  "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
+  "receiver": "0x48bac603E497ce8E6E7a54D095CA48B189E8fED1",
+  "recordAction": "0x59c56c59CDE347c3319e1c43108090fCa5ad0aF4"
+}

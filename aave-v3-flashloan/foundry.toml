@@ -1,0 +1,17 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+gas_reports = ["FlashLoanReceiver"]
+# Deploy script nulis deployments/<chainId>.json: default fs_permission cuma read.
+fs_permissions = [{ access = "read-write", path = "./" }]
+
+[fuzz]
+runs = 256
+
+[rpc_endpoints]
+mainnet = "${FORK_RPC_URL}"
+
+# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

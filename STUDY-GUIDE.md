@@ -1,7 +1,9 @@
-# STUDY-GUIDE: Cara baca hasil catch-up 16 Sep-6 Okt
+# STUDY-GUIDE: Cara baca semua yang terdokumentasi (16 Sep sampai 27 Okt)
 
 > Buat yang ngerjain kodenya bukan lo (agent), dan lo belum baca sama sekali.
 > Prinsip: baca yang LO sudah kuasai dulu sebagai pijakan, urutan disusun biar tiap langkah numpang di yang udah dipahami, dan tiap project ditutup dengan drill rusak-meniapkan sesuatu. Jangan baca linear semuanya sekaligus: 1 project = 1-2 sesi.
+>
+> Cakupan sekarang 5 tahap: Tahap 1-4 = hasil 16 Sep sampai 9 Okt (project Foundry + frontend). Tahap 5 = batch 10-27 Okt (audit contest, L2, CCIP, Aave v3). Tahap 5 materi baru semua, belum pernah lo baca.
 
 ## Cara belajar: loop per unit (INILAH cara belajarnya)
 
@@ -15,7 +17,7 @@ Unit belajar lo = SATU masalah di devlog. Ada 98 masalah total, semuanya terinde
 
 Ritme realistis: **3-5 unit per sesi**. Gak harus urut 100%, mood boleh jadi kompas (lagi pengin frontend? ambil unit frontend). Yang GAK BOLEH dilewati: langkah 3 dan 4. Itu bedanya "paham di kepala" dan "paham di tangan".
 
-Urutan baca 4 tahap di bawah ini tetap jadi peta besar: unit-unitnya lo ambil dari Tahap 1 dulu, baru Tahap 2, dst.
+Urutan baca 5 tahap di bawah ini tetap jadi peta besar: unit-unitnya lo ambil dari Tahap 1 dulu, baru Tahap 2, dst. Kalau Tahap 1-4 sudah pernah lo lewatin, langsung ke Tahap 5.
 
 ## Urutan baca (kenapa urutan ini)
 
@@ -67,10 +69,30 @@ Drill (the best one): hapus `vm.assume(requiredIn <= type(uint112).max)` di test
 
 Drill: ganti slippage default, PREDIKSI dulu swap mana yang bakal revert kena guard amountOutMin di kontrak, baru eksekusi di anvil; terus tukar urutan approve di hook dan lihat error apa yang muncul dari RPC.
 
+### Tahap 5: batch 10-27 Okt (materi baru, belum pernah lo baca)
+
+Semua di tahap ini baru: audit contest, L2, CCIP, dan Aave v3. Tidak ada yang numpang di kode yang lo tulis sendiri, jadi ini tahap yang paling butuh mode ketik ulang.
+
+1. `docs/how-audit-contests-work.md`: beda Code4rena vs Sherlock vs Codehawks vs Cantina, alur contest, severity, dan bagian yang paling penting: kenapa contest tidak mencegah exploit. Baca studi kasus Cork Protocol dua kali.
+2. `security/AUDIT-TEMPLATE.md`: template finding, panduan severity, tujuh pertanyaan uji-sebelum-submit. Bedanya dengan `security/SECURITY-CHECKLIST.md`: checklist buat nyari, template buat nulis.
+3. `docs/l2-deep-dive.md`: fraud proof vs validity proof, angka L2Beat, dan framework stage L2. Bagian 6 (cara baca stage) yang paling berguna jangka panjang.
+4. `ccip-crosschain/docs/ccip-architecture.md` lalu `SPEC.md`. Baca dokumen arsitekturnya dulu sampai paham alur 6 langkahnya, baru buka `SPEC.md` section 6 dan 7.
+5. Kode: `src/MessageReceiver.sol` dulu (kecil dan padat makna), baru `src/CrossChainSender.sol` (perhatikan refund), lalu `test/mocks/MockRouter.sol` (pahami kenapa mock-nya butuh `sourceChainSelectorForDelivery`).
+6. `test/CrossChain.t.sol`: baca sebagai cerita. Tiap test itu satu properti keamanan atau satu edge case, bukan sekadar kode uji.
+7. `docs/defi-protocol-onepager.md`, lalu jalankan ulang sendiri perintah `cast call` yang ada di section "Data terukur". Baca angka aslinya di terminal, jangan cuma percaya tabelnya.
+8. `ccip-crosschain/devlog/2026-10-25-ccip-crosschain.md`: enam masalah nyata, termasuk yang bikin test hijau padahal salah.
+
+Drill (Tahap 5 punya drill terbaik kedua setelah AMM):
+
+- **CCIP, drill utama.** Hapus `onlyRouter` dari `MessageReceiver.ccipReceive`, jalankan `forge test`, lihat test mana yang nangkep. Balikin. Lalu hapus cek `trustedSender`, jalankan lagi. Dua drill itu yang bikin lo ngerasain sendiri kenapa dua validasi itu wajib, bukan sekadar disuruh percaya.
+- **CCIP, drill refund.** Ubah `MockRouter.getFee` supaya mengembalikan 0, jalankan test refund. Lalu pikirkan: kalau fee-nya 0, apakah kontraknya masih benar? Kenapa refund dihitung dari `getFee`, bukan dari angka tetap?
+- **Aave, drill hitung.** Pakai kalkulator, tanpa buka dokumen: WETH LTV 80,50%, liquidation threshold 83%. Kalau posisi punya health factor 1,2, berapa persen penurunan harga WETH yang bikin dia jatuh di bawah 1? Cocokkan nanti dengan simulasi di 30 Okt.
+- **L2, drill cek basi.** Buka L2Beat, cek stage Base, Arbitrum One, dan ZKsync Era sekarang, bandingkan dengan tabel di `docs/l2-deep-dive.md` (snapshot Agt 2026). Kalau ada yang bergerak, itu justru temuan bagus, dan tandai mana yang berubah.
+
 ## Aturan main biar beneran nyangkut
 
 - Jangan cuma baca: tiap selesai satu bagian, jalankan `forge test` di project itu, lalu RUSAKIN satu hal (balikin lagi setelahnya) dan lihat test mana yang nangkep. Kalau gak ada yang nangkep, itu temuan: testnya kurang.
-- Ukuran realistis: Tahap 1 = 1 sesi, Tahap 2 = 2-3 sesi, Tahap 3 = 2 sesi. Gak harus habis semalam, dan gak perlu nunggu semuanya selesai buat mulai.
+- Ukuran realistis: Tahap 1 = 1 sesi, Tahap 2 = 2-3 sesi, Tahap 3 = 2 sesi, Tahap 5 = 3-4 sesi (CCIP sendirian 1-2 sesi karena konsepnya paling baru). Gak harus habis semalam, dan gak perlu nunggu semuanya selesai buat mulai.
 - Kalau ngerasa "baca doang gak nyangkut", turunkan ke mode ketik ulang: tulis ulang fungsi inti (rewardPerToken, getAmountOut, atau lifecycle test) dari ingatan, bandingkan dengan aslinya.
 - Devlog itu dibaca dengan sikap kritis: "masalahnya masuk akal gak? gwa bakal ngerjain beda gak?" Beda pendapat = bagus, tulis di idea pipeline.
 
@@ -79,3 +101,4 @@ Drill: ganti slippage default, PREDIKSI dulu swap mana yang bakal revert kena gu
 Tahap 1: Kenapa approve 2 langkah? Kenapa parse custom error, bukan string match?
 Tahap 2: Kenapa votes nol walau punya token? Kenapa timelock ada? Kenapa cancel cuma proposer saat Pending? Kenapa quorum dihitung dari for+abstain?
 Tahap 3: Turunkan getAmountOut dari x*y=k tanpa lihat. Kenapa MINIMUM_LIQUIDITY? Kenapa overflow di getAmountOut itu domain, bukan bug, dan kapan dia panic?
+Tahap 5: Kenapa audit contest tidak mencegah exploit, dan apa yang sebenarnya dibeli dari ikut contest? Kenapa receiver CCIP wajib cek dua hal (router DAN sumber), kenapa salah satu saja tidak cukup? Kenapa CCIP pakai chain selector, bukan chain id? Kenapa health factor pakai liquidation threshold, bukan LTV? Kenapa kelebihan bayar fee CCIP harus di-refund sendiri?
