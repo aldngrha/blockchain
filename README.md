@@ -1,44 +1,44 @@
 # Blockchain Learning Workspace
 
-Workspace belajar blockchain engineering — mengikuti [ROADMAP.md](ROADMAP.md) (3 Ags 2026 → 21 Jan 2027, 172 hari), satu proyek Solidity/Foundry per materi. Tiap proyek punya `SPEC.md`, `README.md`, `devlog/`, dan test suite sendiri.
+Blockchain engineering learning workspace, following [ROADMAP.md](ROADMAP.md) (Aug 3, 2026 to Jan 21, 2027, 172 days), one Solidity/Foundry project per topic. Every project has its own `SPEC.md`, `README.md`, `devlog/`, and test suite.
 
-## Struktur
+## Structure
 
-### Proyek
+### Projects
 
-| Dir | Isi |
+| Dir | Contents |
 |---|---|
-| [defi-staking/](defi-staking/) | **Project 1 — DeFi Staking Protocol.** Staking pool dengan reward math pola Synthetix (`rewardPerToken` accumulator, mint-on-claim). Foundry: 75/75 test (unit + fuzz + invariant handler-based), coverage 100%. Frontend Vite + React + wagmi + RainbowKit. |
-| [governance-dapp/](governance-dapp/) | **Governance:** GovernanceToken (votes/delegation), GovernorContract (OZ v5 Governor), Treasury. Deploy + subgraph + frontend (proposal list, voting via `getPastVotes`, delegate). Foundry: 33/33 test. |
-| [simple-dex/](simple-dex/) | DEX minimal — AMM core, ada `SPEC.md`, `devlog/`, `deployments/`. |
-| [ccip-crosschain/](ccip-crosschain/) | **Cross-chain (25 Okt):** `CrossChainSender` + `MessageReceiver` untuk Chainlink CCIP. 24/24 test hijau, deploy lokal anvil terverifikasi. Deploy testnet belum. |
-| [aave-v3-flashloan/](aave-v3-flashloan/) | **Flash loan (31 Okt):** receiver Aave v3 dengan plugin action ber-allowlist. 10 test lokal + 2 test fork mainnet melawan Pool Aave v3 asli (premium 0,05% terverifikasi pindah ke aToken). Deploy anvil fork terverifikasi. |
+| [defi-staking/](defi-staking/) | **Project 1 - DeFi Staking Protocol.** Staking pool with Synthetix-style reward math (`rewardPerToken` accumulator, mint-on-claim). Foundry: 75/75 tests (unit + fuzz + handler-based invariant), 100% coverage. Frontend: Vite + React + wagmi + RainbowKit. |
+| [governance-dapp/](governance-dapp/) | **Governance:** GovernanceToken (votes/delegation), GovernorContract (OZ v5 Governor), Treasury. Deploy + subgraph + frontend (proposal list, voting via `getPastVotes`, delegate). Foundry: 33/33 tests. |
+| [simple-dex/](simple-dex/) | Minimal DEX: AMM core, with `SPEC.md`, `devlog/`, `deployments/`. |
+| [ccip-crosschain/](ccip-crosschain/) | **Cross-chain (Oct 25):** `CrossChainSender` + `MessageReceiver` for Chainlink CCIP. 24/24 tests passing, local anvil deploy verified. No testnet deploy yet. |
+| [aave-v3-flashloan/](aave-v3-flashloan/) | **Flash loan (Oct 31):** Aave v3 receiver with an allowlisted action plugin. 10 local tests + 2 mainnet fork tests against the real Aave v3 Pool (0.05% premium verified as a transfer to the aToken). Anvil fork deploy verified. |
 | [nft-minting-dapp/](nft-minting-dapp/) | NFT minting + frontend. |
-| [foundry-practice/](foundry-practice/) | Latihan Foundry harian (fork test, scripting, ds-test patterns). |
-| [cyfrin-course/](cyfrin-course/) | Coursework Cyfrin Advanced Foundry (sections 1–8). |
-| [security/](security/) | Materi keamanan: Ethernaut review, Slither report, security checklist, best practices, template finding audit. |
-| [web3-frontend/](web3-frontend/) | Fundamentals frontend: ethers, wagmi app, WETH event listener. |
-| [docs/](docs/) | Catatan lintas proyek: audit contest, L2 deep dive, one-pager Aave v3, simulasi likuidasi Aave v3, catatan Uniswap v3 (tick, `sqrtPriceX96`, swap execution path), plus rencana di `docs/plans/`. |
+| [foundry-practice/](foundry-practice/) | Daily Foundry drills (fork tests, scripting, ds-test patterns). |
+| [cyfrin-course/](cyfrin-course/) | Cyfrin Advanced Foundry coursework (sections 1 to 8). |
+| [security/](security/) | Security material: Ethernaut review, Slither report, security checklist, best practices, audit finding template. |
+| [web3-frontend/](web3-frontend/) | Frontend fundamentals: ethers, wagmi app, WETH event listener. |
+| [docs/](docs/) | Cross-project notes: audit contests, L2 deep dive, Aave v3 one-pager, Aave v3 liquidation simulation, Uniswap v3 notes (tick, `sqrtPriceX96`, swap execution path), plus plans in `docs/plans/`. |
 
-### Dokumen belajar (root)
+### Learning documents (root)
 
-- **[ROADMAP.md](ROADMAP.md)** — jadwal harian lengkap, dari titik lanjut sampai silabus beres.
-- **[RESUME-HERE.md](RESUME-HERE.md)** — status terkini: posisi progress, hasil catch-up, langkah berikutnya. **Mulai dari sini kalau balik lagi setelah lama nggak buka.**
-- **[STUDY-GUIDE.md](STUDY-GUIDE.md)** — ringkasan konsep per topik.
-- **[PROBLEM-BOOK.md](PROBLEM-BOOK.md)** — kumpulan masalah yang ketemu + solusinya (knowledge base debugging).
+- **[ROADMAP.md](ROADMAP.md)**: full daily schedule, from the current position to the end of the syllabus.
+- **[RESUME-HERE.md](RESUME-HERE.md)**: current status: progress position, catch-up results, next steps. **Start here when coming back after a long break.**
+- **[STUDY-GUIDE.md](STUDY-GUIDE.md)**: concept summary per topic.
+- **[PROBLEM-BOOK.md](PROBLEM-BOOK.md)**: problems hit so far plus their fixes (debugging knowledge base).
 
-## Menjalankan test
+## Running tests
 
-Tiap proyek Foundry mandiri (tanpa workspace root build):
+Each Foundry project is standalone (no root workspace build):
 
 ```bash
-cd defi-staking && forge test        # atau proyek lain
+cd defi-staking && forge test        # or any other project
 ```
 
-`lib/` (forge deps) nggak di-commit — clone fresh = `forge install` dulu (terdokumentasi di README tiap proyek). Frontend: `npm install && npm run build` di `<project>/frontend/`.
+`lib/` (forge deps) is not committed, so a fresh clone needs `forge install` first (documented in each project README). Frontend: `npm install && npm run build` in `<project>/frontend/`.
 
-## Konvensi
+## Conventions
 
-- **Devlog harian** di `<project>/devlog/` — apa yang dikerjain, masalah, solusi.
-- **Konten publishable** (thread, artikel, draft) di `<project>/content/` — draft, bukan final.
-- **Spec-first:** fitur baru nulis `SPEC.md` dulu (edge cases E1–E17, invariants I-1…I-8), baru kode + test TDD.
+- **Daily devlog** in `<project>/devlog/`: what was done, problems, fixes.
+- **Publishable content** (threads, articles, drafts) in `<project>/content/`: drafts, not final.
+- **Spec-first:** new features write `SPEC.md` first (edge cases E1 to E17, invariants I-1 to I-8), then code + TDD tests.
