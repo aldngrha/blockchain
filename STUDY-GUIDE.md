@@ -1,104 +1,104 @@
-# STUDY-GUIDE: Cara baca semua yang terdokumentasi (16 Sep sampai 27 Okt)
+# STUDY-GUIDE: How to read everything documented (Sep 16 to Oct 27)
 
-> Buat yang ngerjain kodenya bukan lo (agent), dan lo belum baca sama sekali.
-> Prinsip: baca yang LO sudah kuasai dulu sebagai pijakan, urutan disusun biar tiap langkah numpang di yang udah dipahami, dan tiap project ditutup dengan drill rusak-meniapkan sesuatu. Jangan baca linear semuanya sekaligus: 1 project = 1-2 sesi.
+> For when you did not write the code yourself (an agent did), and you have not read any of it.
+> Principle: read what YOU already know first as a foothold, the order is arranged so each step rests on something you already understand, and each project ends with a break-it drill. Do not read everything linearly at once: 1 project = 1-2 sessions.
 >
-> Cakupan sekarang 5 tahap: Tahap 1-4 = hasil 16 Sep sampai 9 Okt (project Foundry + frontend). Tahap 5 = batch 10-27 Okt (audit contest, L2, CCIP, Aave v3). Tahap 5 materi baru semua, belum pernah lo baca.
+> Current coverage is 5 stages: Stages 1-4 = the Sep 16 to Oct 9 output (Foundry projects + frontends). Stage 5 = the Oct 10-27 batch (audit contests, L2, CCIP, Aave v3). Everything in Stage 5 is new material you have never read.
 
-## Cara belajar: loop per unit (INILAH cara belajarnya)
+## How to learn: the per-unit loop (THIS is the way to learn)
 
-Unit belajar lo = SATU masalah di devlog. Ada 98 masalah total, semuanya terindeks di `PROBLEM-BOOK.md` (dikelompokkan per tema, ringkasan 1-2 baris + link ke devlog aslinya). Tiap unit lo lewatin loop 5 langkah ini, 20-30 menit:
+Your learning unit = ONE problem in a devlog. There are 98 problems in total, all indexed in `PROBLEM-BOOK.md` (grouped by theme, a 1-2 line summary plus a link to the original devlog). Each unit goes through this 5-step loop, 20-30 minutes:
 
-1. **Baca MASALAHNYA dulu** (di PROBLEM-BOOK atau langsung devlog). Baca section Masalah + Kenapa, lalu SEBELUM baca Solusi, berhenti dan prediksi dulu: "kalau gwa, gwa fix di mana? gimana caranya?" Prediksi lo meleset justru momen belajar paling berharga, karena beda antara prediksi dan kenyataan = titik buta lo.
-2. **Baca kode solusinya, cuma bagian itu.** Buka file/fungsi yang disebut di section Solusi. Jangan baca seluruh file dari atas.
-3. **Jalankan test di mesin lo** (`forge test` untuk kontrak, `npm run build && npm run lint` untuk frontend). Hijau di mesin lo, bukan di omongan siapa pun. Ini juga latihan nyata memakai tooling.
-4. **Drill rusak-meniapkan** (sekali per TAHAP, bukan per unit; daftarnya di tiap tahap di bawah): rusak satu hal sengaja, jalankan test, lihat yang mana yang nangkep, pahami kenapa, balikin lagi.
-5. **Checkpoint**: jawab pertanyaan checklist di paling bawah file ini (suara keras, tanpa buka catatan). Gak bisa jawab = balik ke langkah 1 untuk unit yang terkait. Bisa jawab = unit berikutnya.
+1. **Read the PROBLEM first** (in PROBLEM-BOOK or straight in the devlog). Read the Problem + Why sections, then BEFORE reading the Solution, stop and predict: "if it were me, where would I fix this? how?" A wrong prediction is the most valuable learning moment, because the gap between prediction and reality is your blind spot.
+2. **Read the solution code, only that part.** Open the file/function named in the Solution section. Do not read the whole file from the top.
+3. **Run the test on your machine** (`forge test` for contracts, `npm run build && npm run lint` for frontends). Green on your machine, not on someone's word. This is also real practice using the tooling.
+4. **Break-it drill** (once per STAGE, not per unit; the list is under each stage below): break one thing on purpose, run the tests, see which one catches it, understand why, put it back.
+5. **Checkpoint**: answer the checklist questions at the bottom of this file (out loud, without opening notes). Cannot answer = go back to step 1 for the related unit. Can answer = next unit.
 
-Ritme realistis: **3-5 unit per sesi**. Gak harus urut 100%, mood boleh jadi kompas (lagi pengin frontend? ambil unit frontend). Yang GAK BOLEH dilewati: langkah 3 dan 4. Itu bedanya "paham di kepala" dan "paham di tangan".
+Realistic rhythm: **3-5 units per session**. It does not have to be 100% in order, mood can be the compass (feel like frontend? take a frontend unit). What you MAY NOT skip: steps 3 and 4. That is the difference between "understood in the head" and "understood in the hands".
 
-Urutan baca 5 tahap di bawah ini tetap jadi peta besar: unit-unitnya lo ambil dari Tahap 1 dulu, baru Tahap 2, dst. Kalau Tahap 1-4 sudah pernah lo lewatin, langsung ke Tahap 5.
+The 5-stage reading order below stays the big map: take units from Stage 1 first, then Stage 2, and so on. If you already went through Stages 1-4, go straight to Stage 5.
 
-## Urutan baca (kenapa urutan ini)
+## Reading order (why this order)
 
-### Tahap 1: defi-staking frontend (paling ringan, lo udah hafal kontraknya)
+### Stage 1: defi-staking frontend (lightest, you already know the contracts)
 
-Kontrak staking itu buatan lo sendiri sampai 15 Sep, jadi satu-satunya materi baru adalah pola frontend. Ini juga jadi modal buat dua frontend lain.
+You wrote the staking contract yourself through Sep 15, so the only new material is the frontend pattern. It is also the foundation for the other two frontends.
 
-1. `defi-staking/frontend/src/config.js` lalu `src/abi.js` (config chains, address dari deployments JSON)
-2. `src/hooks/` (usePoolReads, usePoolEvents, useStakingActions): pola read via wagmi, event watching buat real-time, tx states
-3. `src/components/StakeForm.jsx` (flow approve 2 langkah) dan `ActionFeedback.jsx` (parse custom error jadi pesan manusiawi)
+1. `defi-staking/frontend/src/config.js` then `src/abi.js` (chain config, addresses from the deployments JSON)
+2. `src/hooks/` (usePoolReads, usePoolEvents, useStakingActions): read pattern via wagmi, event watching for real time, tx states
+3. `src/components/StakeForm.jsx` (2-step approve flow) and `ActionFeedback.jsx` (parse custom errors into human messages)
 4. `devlog/2026-09-16-frontend-dashboard.md`
-5. README `frontend/README.md` lalu jalankan: `anvil` + deploy script + `npm run dev`, connect wallet, stake kecil
+5. The `frontend/README.md` README, then run it: `anvil` + deploy script + `npm run dev`, connect a wallet, stake a small amount
 
-Drill: ganti salah satu validasi di StakeForm jadi salah sengaja, lihat error-nya masuk akal gak buat user; hapus event listener, rasakan bedanya data jadi basi.
+Drill: make one of the validations in StakeForm wrong on purpose, see whether the error makes sense to a user; remove the event listener and feel how the data goes stale.
 
-### Tahap 2: governance-dapp (lompatan konsep terbesar)
+### Stage 2: governance-dapp (the biggest conceptual jump)
 
-Materi baru: checkpoint votes (ERC20Votes), lifecycle proposal, role Timelock. Ini yang paling butuh waktu.
+New material: checkpoint votes (ERC20Votes), proposal lifecycle, Timelock roles. This one needs the most time.
 
-1. `governance-dapp/docs/research-governance.md` (kenapa Governor + Timelock, lifecycle, trade-off parameter)
-2. `SPEC.md` (desain final)
-3. Devlog berurutan: `2026-09-20` (research), `21` (spec), `22` (token), `23` (governor), `24` (timelock). Devlog ini ditulis dari masalah nyata saat build, jadi ini jalan pintas ke jebakannya
-4. Kode, urutan: `src/GovernanceToken.sol` (perhatikan `_update` override, votes cuma nempel setelah delegate) lalu `src/GovernorContract.sol` (override matrix OZ v5, catat kenapa butuh via_ir: EIP-170) lalu `src/Treasury.sol` (kecil)
-5. `test/GovernorFullFlow.t.sol`: test full flow ini adalah penjelasan terbaik lifecycle propose-vote-queue-execute, dibaca seperti cerita
-6. `script/DeployGovernance.s.sol`: urutan wiring role dan kenapa deployer renounce
-7. Frontend: `src/hooks/useProposals.js` (scan event ProposalCreated, kenapa butuh cache, kenapa The Graph dibutuhkan) + `devlog/2026-09-26-voting-ui.md` (voting power dari snapshot block, BUKAN balance sekarang: jebakan klasik ERC20Votes)
+1. `governance-dapp/docs/research-governance.md` (why Governor + Timelock, lifecycle, parameter trade-offs)
+2. `SPEC.md` (the final design)
+3. Devlogs in order: `2026-09-20` (research), `21` (spec), `22` (token), `23` (governor), `24` (timelock). These devlogs were written from real problems during the build, so they are a shortcut to the traps
+4. Code, in order: `src/GovernanceToken.sol` (note the `_update` override, votes only attach after delegate) then `src/GovernorContract.sol` (OZ v5 override matrix, note why via_ir is needed: EIP-170) then `src/Treasury.sol` (small)
+5. `test/GovernorFullFlow.t.sol`: this full flow test is the best explanation of the propose-vote-queue-execute lifecycle, read it like a story
+6. `script/DeployGovernance.s.sol`: the role wiring order and why the deployer renounces
+7. Frontend: `src/hooks/useProposals.js` (ProposalCreated event scan, why it needs a cache, why The Graph is needed) + `devlog/2026-09-26-voting-ui.md` (voting power from the snapshot block, NOT the current balance: the classic ERC20Votes trap)
 
-Drill: di test, naikkan quorum jadi 51% dan prediksi dulu path mana yang jadi Defeated baru jalankan; coba vote tanpa delegate dan baca kenapa weight-nya 0 (bukan revert).
+Drill: in a test, raise quorum to 51% and predict which path becomes Defeated before running it; try voting without delegating and read why the weight is 0 (not a revert).
 
-### Tahap 3: simple-dex (math-heavy tapi self-contained)
+### Stage 3: simple-dex (math-heavy but self-contained)
 
-1. `simple-dex/docs/uniswap-v2-research.md`: turunan x*y=k + tabel impermanent loss, kerjakan ulang satu angka pakai kalkulator/manual biar nempel
+1. `simple-dex/docs/uniswap-v2-research.md`: the x*y=k derivation + impermanent loss table, redo one number with a calculator/by hand so it sticks
 2. `SPEC.md`
-3. `src/AMMLibrary.sol`: kecil dan pure, hafalkan getAmountOut dan arah pembulatan (output floor, input ceil, selalu menguntungkan pool)
-4. `src/DexPair.sol`: perhatikan lock pattern, MINIMUM_LIQUIDITY, dan refund excess di addLiquidity
-5. Cerita overflow (paling berharga): `test/AMMLibrary.t.sol` bagian domain + `devlog/2026-10-02-core-math.md`. Ini contoh nyata fuzz test nemuin batas domain, bukan bug
+3. `src/AMMLibrary.sol`: small and pure, memorise getAmountOut and the rounding direction (output floor, input ceil, always in the pool's favour)
+4. `src/DexPair.sol`: note the lock pattern, MINIMUM_LIQUIDITY, and the excess refund in addLiquidity
+5. The overflow story (the most valuable one): `test/AMMLibrary.t.sol` domain section + `devlog/2026-10-02-core-math.md`. This is a real example of a fuzz test finding a domain limit, not a bug
 6. `devlog/2026-10-03` (first provision sqrt), `04` (slippage + deadline), `docs/security-review.md`
-7. Frontend swap UI: `frontend/src` bagian yang mirror getAmountOut ke JS, bandingkan definisi price impact di docs
+7. Frontend swap UI: the part of `frontend/src` that mirrors getAmountOut in JS, compare the price impact definitions in the docs
 
-Drill (the best one): hapus `vm.assume(requiredIn <= type(uint112).max)` di test round-trip, jalankan `forge test`, dan tonton fuzz menemukan lagi overflow yang sama dalam hitungan detik. Itu cara paling cepat ngerasain kenapa invariant test itu kuat.
+Drill (the best one): remove `vm.assume(requiredIn <= type(uint112).max)` in the round-trip test, run `forge test`, and watch the fuzz find the same overflow again within seconds. It is the fastest way to feel why invariant tests are strong.
 
-### Tahap 4: frontend AMM + konten (7-9 Okt), baca SETELAH Tahap 3
+### Stage 4: AMM frontend + content (Oct 7-9), read AFTER Stage 3
 
-1. `simple-dex/frontend/src/lib/amm.js`: mirror JS dari getAmountOut/getAmountIn/quote. Baca sambil bandingkan langsung ke `src/AMMLibrary.sol`: BigInt dipakai biar presisinya sama, pembulatan harus identik, kalau beda 1 wei aja UI lo langsung bohong ke user. Testnya udah dibandingkan ke 26 vektor eksak suite Solidity, cari di devlog 7 Okt
-2. Price impact dua definisi (execution vs marginal) di `SwapPanel.jsx` + `docs/uniswap-v2-research.md`: pahami kenapa angkanya beda (9.33% vs ~17% buat swap 10% pool) dan kenapa dua-duanya jujur
-3. `LiquidityPanel.jsx` + `hooks/useDexActions.js`: guidance rasio via quote, perilaku refund yang sebenarnya (surplus GAK PERNAH ditarik, CEI: hitung dulu transferFrom sesuai rasio; ini beda dari intuisi pull-and-refund) dan temuan yang batalin brief: remove liquidity GAK butuh approve LP karena pair burn LP langsung via _burn
-4. `devlog/2026-10-09-demo-readme-article.md` lalu `content/mirror-article-draft.md`: baca sebagai latihan mengajar, kalau urutan penjelasan artikelnya beda dari urutan lo ngerti, tulis versi lo sendiri
-5. `content/demo-script.md`: dipakai buat rekam Loom (manual), semua angkanya dari simulasi sekuens eksak
+1. `simple-dex/frontend/src/lib/amm.js`: the JS mirror of getAmountOut/getAmountIn/quote. Read it while comparing directly with `src/AMMLibrary.sol`: BigInt is used so precision matches, rounding must be identical, a 1 wei difference and your UI lies to the user. Its tests were compared against 26 exact vectors from the Solidity suite, look for them in the Oct 7 devlog
+2. The two price impact definitions (execution vs marginal) in `SwapPanel.jsx` + `docs/uniswap-v2-research.md`: understand why the numbers differ (9.33% vs ~17% for a 10% of pool swap) and why both are honest
+3. `LiquidityPanel.jsx` + `hooks/useDexActions.js`: ratio guidance via quote, the actual refund behaviour (the surplus is NEVER pulled, CEI: compute transferFrom by ratio first; this differs from the pull-and-refund intuition) and the finding that overturned the brief: remove liquidity does NOT need an LP approve because the pair burns LP directly via _burn
+4. `devlog/2026-10-09-demo-readme-article.md` then `content/mirror-article-draft.md`: read as a teaching exercise, if the article's explanation order differs from the order you understood it, write your own version
+5. `content/demo-script.md`: used to record the Loom (manual), every number comes from an exact sequence simulation
 
-Drill: ganti slippage default, PREDIKSI dulu swap mana yang bakal revert kena guard amountOutMin di kontrak, baru eksekusi di anvil; terus tukar urutan approve di hook dan lihat error apa yang muncul dari RPC.
+Drill: change the default slippage, PREDICT first which swap will revert on the amountOutMin guard in the contract, then execute it on anvil; then swap the approve order in the hook and see which error comes back from the RPC.
 
-### Tahap 5: batch 10-27 Okt (materi baru, belum pernah lo baca)
+### Stage 5: Oct 10-27 batch (new material, never read before)
 
-Semua di tahap ini baru: audit contest, L2, CCIP, dan Aave v3. Tidak ada yang numpang di kode yang lo tulis sendiri, jadi ini tahap yang paling butuh mode ketik ulang.
+Everything in this stage is new: audit contests, L2, CCIP, and Aave v3. None of it rests on code you wrote yourself, so this is the stage that most needs retype mode.
 
-1. `docs/how-audit-contests-work.md`: beda Code4rena vs Sherlock vs Codehawks vs Cantina, alur contest, severity, dan bagian yang paling penting: kenapa contest tidak mencegah exploit. Baca studi kasus Cork Protocol dua kali.
-2. `security/AUDIT-TEMPLATE.md`: template finding, panduan severity, tujuh pertanyaan uji-sebelum-submit. Bedanya dengan `security/SECURITY-CHECKLIST.md`: checklist buat nyari, template buat nulis.
-3. `docs/l2-deep-dive.md`: fraud proof vs validity proof, angka L2Beat, dan framework stage L2. Bagian 6 (cara baca stage) yang paling berguna jangka panjang.
-4. `ccip-crosschain/docs/ccip-architecture.md` lalu `SPEC.md`. Baca dokumen arsitekturnya dulu sampai paham alur 6 langkahnya, baru buka `SPEC.md` section 6 dan 7.
-5. Kode: `src/MessageReceiver.sol` dulu (kecil dan padat makna), baru `src/CrossChainSender.sol` (perhatikan refund), lalu `test/mocks/MockRouter.sol` (pahami kenapa mock-nya butuh `sourceChainSelectorForDelivery`).
-6. `test/CrossChain.t.sol`: baca sebagai cerita. Tiap test itu satu properti keamanan atau satu edge case, bukan sekadar kode uji.
-7. `docs/defi-protocol-onepager.md`, lalu jalankan ulang sendiri perintah `cast call` yang ada di section "Data terukur". Baca angka aslinya di terminal, jangan cuma percaya tabelnya.
-8. `ccip-crosschain/devlog/2026-10-25-ccip-crosschain.md`: enam masalah nyata, termasuk yang bikin test hijau padahal salah.
+1. `docs/how-audit-contests-work.md`: Code4rena vs Sherlock vs Codehawks vs Cantina, the contest flow, severity, and the most important part: why contests do not prevent exploits. Read the Cork Protocol case study twice.
+2. `security/AUDIT-TEMPLATE.md`: finding template, severity guide, the seven check-before-submit questions. The difference from `security/SECURITY-CHECKLIST.md`: the checklist is for finding, the template is for writing.
+3. `docs/l2-deep-dive.md`: fraud proof vs validity proof, L2Beat numbers, and the L2 stage framework. Section 6 (how to read a stage) is the most useful long term.
+4. `ccip-crosschain/docs/ccip-architecture.md` then `SPEC.md`. Read the architecture doc first until the 6-step flow makes sense, then open `SPEC.md` sections 6 and 7.
+5. Code: `src/MessageReceiver.sol` first (small and dense), then `src/CrossChainSender.sol` (note the refund), then `test/mocks/MockRouter.sol` (understand why the mock needs `sourceChainSelectorForDelivery`).
+6. `test/CrossChain.t.sol`: read it as a story. Each test is one security property or one edge case, not just test code.
+7. `docs/defi-protocol-onepager.md`, then rerun the `cast call` commands in the "Measured data" section yourself. Read the real numbers in the terminal, do not just trust the table.
+8. `ccip-crosschain/devlog/2026-10-25-ccip-crosschain.md`: six real problems, including the ones that made a test green while wrong.
 
-Drill (Tahap 5 punya drill terbaik kedua setelah AMM):
+Drill (Stage 5 has the second best drill after the AMM one):
 
-- **CCIP, drill utama.** Hapus `onlyRouter` dari `MessageReceiver.ccipReceive`, jalankan `forge test`, lihat test mana yang nangkep. Balikin. Lalu hapus cek `trustedSender`, jalankan lagi. Dua drill itu yang bikin lo ngerasain sendiri kenapa dua validasi itu wajib, bukan sekadar disuruh percaya.
-- **CCIP, drill refund.** Ubah `MockRouter.getFee` supaya mengembalikan 0, jalankan test refund. Lalu pikirkan: kalau fee-nya 0, apakah kontraknya masih benar? Kenapa refund dihitung dari `getFee`, bukan dari angka tetap?
-- **Aave, drill hitung.** Pakai kalkulator, tanpa buka dokumen: WETH LTV 80,50%, liquidation threshold 83%. Kalau posisi punya health factor 1,2, berapa persen penurunan harga WETH yang bikin dia jatuh di bawah 1? Cocokkan nanti dengan simulasi di 30 Okt.
-- **L2, drill cek basi.** Buka L2Beat, cek stage Base, Arbitrum One, dan ZKsync Era sekarang, bandingkan dengan tabel di `docs/l2-deep-dive.md` (snapshot Agt 2026). Kalau ada yang bergerak, itu justru temuan bagus, dan tandai mana yang berubah.
+- **CCIP, main drill.** Remove `onlyRouter` from `MessageReceiver.ccipReceive`, run `forge test`, see which test catches it. Put it back. Then remove the `trustedSender` check and run again. Those two drills are what make you feel for yourself why both validations are required, instead of being told to trust it.
+- **CCIP, refund drill.** Change `MockRouter.getFee` to return 0, run the refund test. Then think: if the fee is 0, is the contract still correct? Why is the refund computed from `getFee`, not from a fixed number?
+- **Aave, calculation drill.** With a calculator, without opening the docs: WETH LTV 80.50%, liquidation threshold 83%. If a position has health factor 1.2, what percentage WETH price drop pushes it below 1? Check it against the Oct 30 simulation afterwards.
+- **L2, staleness drill.** Open L2Beat, check the stage of Base, Arbitrum One, and ZKsync Era now, compare with the table in `docs/l2-deep-dive.md` (Aug 2026 snapshot). If something moved, that is a good finding, and mark what changed.
 
-## Aturan main biar beneran nyangkut
+## Ground rules so it actually sticks
 
-- Jangan cuma baca: tiap selesai satu bagian, jalankan `forge test` di project itu, lalu RUSAKIN satu hal (balikin lagi setelahnya) dan lihat test mana yang nangkep. Kalau gak ada yang nangkep, itu temuan: testnya kurang.
-- Ukuran realistis: Tahap 1 = 1 sesi, Tahap 2 = 2-3 sesi, Tahap 3 = 2 sesi, Tahap 5 = 3-4 sesi (CCIP sendirian 1-2 sesi karena konsepnya paling baru). Gak harus habis semalam, dan gak perlu nunggu semuanya selesai buat mulai.
-- Kalau ngerasa "baca doang gak nyangkut", turunkan ke mode ketik ulang: tulis ulang fungsi inti (rewardPerToken, getAmountOut, atau lifecycle test) dari ingatan, bandingkan dengan aslinya.
-- Devlog itu dibaca dengan sikap kritis: "masalahnya masuk akal gak? gwa bakal ngerjain beda gak?" Beda pendapat = bagus, tulis di idea pipeline.
+- Do not just read: after each section, run `forge test` in that project, then BREAK one thing (put it back afterwards) and see which test catches it. If nothing catches it, that is a finding: the tests are thin.
+- Realistic sizing: Stage 1 = 1 session, Stage 2 = 2-3 sessions, Stage 3 = 2 sessions, Stage 5 = 3-4 sessions (CCIP alone 1-2 sessions because the concepts are the newest). It does not have to be finished overnight, and you do not need to wait for everything to be done to start.
+- If it feels like "reading alone does not stick", drop into retype mode: rewrite the core function (rewardPerToken, getAmountOut, or the lifecycle test) from memory, compare with the original.
+- Read devlogs critically: "does the problem make sense? would I do it differently?" Disagreeing is good, write it in the idea pipeline.
 
-## Checklist paham (kalau bisa jawab, tahap itu tuntas)
+## Understanding checklist (if you can answer, that stage is complete)
 
-Tahap 1: Kenapa approve 2 langkah? Kenapa parse custom error, bukan string match?
-Tahap 2: Kenapa votes nol walau punya token? Kenapa timelock ada? Kenapa cancel cuma proposer saat Pending? Kenapa quorum dihitung dari for+abstain?
-Tahap 3: Turunkan getAmountOut dari x*y=k tanpa lihat. Kenapa MINIMUM_LIQUIDITY? Kenapa overflow di getAmountOut itu domain, bukan bug, dan kapan dia panic?
-Tahap 5: Kenapa audit contest tidak mencegah exploit, dan apa yang sebenarnya dibeli dari ikut contest? Kenapa receiver CCIP wajib cek dua hal (router DAN sumber), kenapa salah satu saja tidak cukup? Kenapa CCIP pakai chain selector, bukan chain id? Kenapa health factor pakai liquidation threshold, bukan LTV? Kenapa kelebihan bayar fee CCIP harus di-refund sendiri?
+Stage 1: Why a 2-step approve? Why parse custom errors instead of string matching?
+Stage 2: Why are votes zero even with tokens? Why is there a timelock? Why can only the proposer cancel while Pending? Why is quorum computed from for+abstain?
+Stage 3: Derive getAmountOut from x*y=k without looking. Why MINIMUM_LIQUIDITY? Why is the overflow in getAmountOut a domain limit, not a bug, and when does it panic?
+Stage 5: Why do audit contests not prevent exploits, and what are you actually buying by joining one? Why must a CCIP receiver check two things (router AND source), why is one alone not enough? Why does CCIP use a chain selector instead of a chain id? Why does the health factor use the liquidation threshold instead of LTV? Why must an overpaid CCIP fee be refunded yourself?
